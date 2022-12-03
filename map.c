@@ -26,7 +26,7 @@ void incr_capacity(t_map *map)
 	int **new_lines;
 
 	map->lines_capacity <<= 1;
-	new_lines = malloc(sizeof(inr *) * map->lines_capacity);
+	new_lines = malloc(sizeof(int *) * map->lines_capacity);
 	if(!new_lines)
 		exit_str(ALLOC_ERR);
 	ft_memcpy(new_lines, map->lines, map->height * sizeof(int *));

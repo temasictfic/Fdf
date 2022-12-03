@@ -3,9 +3,9 @@
 int color(int z, int z2, t_map *map)
 {
         if (z == 0 && z2 == 0)
-                map->color = 0xffe6cc;
+                map->color = COLOR_LOW;
         else
-                map->color = 0xff8000;
+                map->color = COLOR_HIGH;
         return (map->color);
 }
 
@@ -20,7 +20,7 @@ void put_pixel(t_mlx *mlx, int x, int y, int color)
 	// büyük eşittir?
 	if (x_calc > 0 && y_calc >= 0 && x_calc < WIN_WIDTH && y_calc < WIN_HEIGHT)
 	{
-		dst = mlx->addr + (y_calc * mlx->line_length + x_calc * (mlx->bit_per_pixel / 8);
+		dst = mlx->addr + (y_calc * mlx->line_length + x_calc * (mlx->bits_per_pixel / 8));
 		*(unsigned int *)dst = color;
 	}
 }
@@ -37,7 +37,7 @@ void zoom(t_p *p1, t_p *p2, t_mlx *mlx)
 void init_coordinates(t_p *p1, t_p *p2, t_z *z, t_mlx *mlx)
 {
 	z->z1 = mlx->map->lines[p1->y][p1->x];
-	z->z2 = mlx->map-lines[p2->y][p2->x];
+	z->z2 = mlx->map->lines[p2->y][p2->x];
 	zoom(p1, p2, mlx);
 	if (mlx->projection == 1)
 		apply_iso(p1, p2, z, mlx);
@@ -54,12 +54,12 @@ void bresenham(t_p p1, t_p p2, t_mlx *mlx)
 	int	err2;
 
 	init_coordinates(&p1, &p2, &z, mlx);
-	delta = point(fabs(p1.x - p2.x), fabs(p1.y - p2.y));
+	delta = p(abs(p1.x - p2.x), abs(p1.y - p2.y));
 	err = err_calc(&delta);
 	while(1)
 	{
 		put_pixel(mlx, p1.x, p1.y, color(z.z1, z.z2, mlx->map));
-		if (p1.x == p2.x && p1.y = p2.y)
+		if ((p1.x == p2.x) && (p1.y = p2.y))
 			break;
 		err2 = err;
 		if (err2 > -delta.x)
@@ -67,7 +67,7 @@ void bresenham(t_p p1, t_p p2, t_mlx *mlx)
 			err -= delta.y;
 			p1.x += (p1.x < p2.x) - (p1.x >= p2.x);
 		}
-		if (e2 < delta.y)
+		if (err2 < delta.y)
 		{
 			err += delta.x;
 			p1.y += (p1.y < p2.y) - (p1.y >= p2.y);

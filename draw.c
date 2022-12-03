@@ -1,6 +1,6 @@
 #include "fdf.h"
 
-t_p point(int x, int y)
+t_p p(int x, int y)
 {
 	t_p p;
 
@@ -40,9 +40,9 @@ void	draw(t_mlx *mlx)
 		while (x < mlx->map->width)
 		{
 			if (x != mlx->map->width-1)
-				bresenham(point(x,y), point(x + 1, y), mlx);
+				bresenham(p(x,y), p(x + 1, y), mlx);
 			if (y != mlx->map->height -1)
-				bresenham(point(x, y), point(x, y+1), mlx);
+				bresenham(p(x, y), p(x, y+1), mlx);
 			x++;
 		
 		}
