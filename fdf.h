@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:43:41 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/06 04:43:51 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/06 06:47:12 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ typedef struct s_mouse
 {
 	int			x;
 	int			y;
-	int			prev_x;
-	int			prev_y;
 }				t_mouse;
 
 typedef struct s_z

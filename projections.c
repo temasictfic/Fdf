@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:46:40 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/06 04:46:46 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/06 09:43:52 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	conic(t_p *p, int z, t_mlx *mlx)
 {
-	p->x = (p->x - p->y) * tan(mlx->angle);
-	p->y = (-z * mlx->raise_z) + (p->x + p->y) * tan(mlx->angle);
+	p->x = p->x * sin(mlx->angle);
+	p->y = z * mlx->raise_z - p->x * cos(mlx->angle);
 }
 
 void	apply_conic(t_p *p1, t_p *p2, t_z *z, t_mlx *mlx)
