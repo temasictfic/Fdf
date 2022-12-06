@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mouse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/06 04:46:24 by sciftci           #+#    #+#             */
+/*   Updated: 2022/12/06 04:46:26 by sciftci          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 int	mouse(int keycode, int x, int y, void *param)
@@ -21,32 +33,31 @@ int	mouse(int keycode, int x, int y, void *param)
 	return (0);
 }
 
-int	mouse_move(int x, int y, void *param)
-{
-	t_mlx	*mlx;
-    int     prev_x;
-    int     prev_y;
-	mlx = (t_mlx *)param;
-	if (!mlx->onclick)
-		return (0);
-	prev_x = mlx->mouse->x;
-	prev_y = mlx->mouse->y;
-	mlx->mouse->x = x;
-	mlx->mouse->y = y;
-	mlx->offset_x += x - prev_x;
-	mlx->offset_y += y - prev_y;
-	draw(mlx);
-	return (0);
-}
-
-int	mouse_release(int keycode, int x, int y, void *param)
+int	mouse_release(int button, int x, int y, void *param)
 {
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)param;
 	(void)x;
 	(void)y;
-	(void)keycode;
+	(void)button;
 	mlx->onclick = 0;
+	return (0);
+}
+
+int	mouse_move(int x, int y, void *param)
+{
+	t_mlx	*mlx;
+
+	mlx = (t_mlx *)param;
+	if (!mlx->onclick)
+		return (0);
+	mlx->mouse->prev_x = mlx->mouse->x;
+	mlx->mouse->prev_y = mlx->mouse->y;
+	mlx->mouse->x = x;
+	mlx->mouse->y = y;
+	mlx->offset_x += x - mlx->mouse->prev_x;
+	mlx->offset_y += y - mlx->mouse->prev_y;
+	draw(mlx);
 	return (0);
 }
