@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:42:43 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/06 06:38:03 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/14 04:52:48 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	init_coordinates(t_p *p1, t_p *p2, t_z *z, t_mlx *mlx)
 	if (mlx->projection == 1)
 		apply_iso(p1, p2, z, mlx);
 	else if (mlx->projection == 2)
-		apply_conic(p1, p2, z, mlx);
+		apply_side(p1, p2, z, mlx);
 }
 
 void	bresenham(t_p p1, t_p p2, t_mlx *mlx)

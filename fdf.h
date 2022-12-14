@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:43:41 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/06 06:47:12 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/14 04:52:15 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@
 // Angle +-
 # define KEY_A 0
 # define KEY_D 2
-// Projections paralel, iso, conic
+// Projections paralel, iso, side
 # define KEY_ONE 18
 # define KEY_TWO 19
 # define KEY_THREE 20
@@ -125,14 +125,12 @@ void			my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 int				deal_key(int keycode, void *param);
 int				escape(void *param);
 void			keyboard_key(int keycode, t_mlx *mlx);
-void			projection(int keycode, t_mlx *mlx);
-void			apply_conic(t_p *p1, t_p *p2, t_z *z, t_mlx *mlx);
+void			projection_key(int keycode, t_mlx *mlx);
+void			apply_side(t_p *p1, t_p *p2, t_z *z, t_mlx *mlx);
 void			apply_iso(t_p *p1, t_p *p2, t_z *z, t_mlx *mlx);
 
 void			setup_controls(t_mlx *mlx);
 
-int				ft_abs(int a);
-int				ft_direction(int a, int b);
 int				err_calculation(t_p *delta);
 void			bresenham(t_p p1, t_p p2, t_mlx *mlx);
 void			init_coordinates(t_p *p1, t_p *p2, t_z *z, t_mlx *mlx);
@@ -154,6 +152,5 @@ char			**ft_split(char const *str, char c);
 unsigned int	count_words(const char *str, char sep);
 
 void			exit_program(char *str);
-void			print_map(t_map *map);
 
 #endif

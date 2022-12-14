@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:44:06 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/06 04:44:08 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/14 04:48:01 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ t_mlx	*init_mlx(t_map *map)
 	mlx->projection = 1;
 	mlx->onclick = 0;
 	mlx->map = map;
-	mlx->map->zoom = WIN_HEIGHT / (mlx->map->width + mlx->map->height);
+	mlx->map->zoom = WIN_WIDTH / (mlx->map->width + mlx->map->height);
 	return (mlx);
 }
