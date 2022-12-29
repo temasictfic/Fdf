@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:44:37 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/29 21:20:21 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/29 22:24:29 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,6 @@ void	keyboard_key(int keycode, t_mlx *mlx)
 {
 	if (keycode == KEY_ESC)
 		exit(0);
-	else if (keycode == KEY_ARROWUP)
-		mlx->map->offset_y -= 16;
-	else if (keycode == KEY_ARROWDOWN)
-		mlx->map->offset_y += 16;
-	else if (keycode == KEY_ARROWRIGHT)
-		mlx->map->offset_x += 16;
-	else if (keycode == KEY_ARROWLEFT)
-		mlx->map->offset_x -= 16;
 	else if (keycode == KEY_Z)
 		mlx->map->raise_z += 0.1;
 	else if (keycode == KEY_X)
@@ -57,6 +49,14 @@ void	projection_key(int keycode, t_mlx *mlx)
 		mlx->map->angles->y_angle = 0;
 		mlx->map->angles->z_angle = 0;
 	}
+	else if (keycode == KEY_ARROWUP)
+		mlx->map->offset_y -= 16;
+	else if (keycode == KEY_ARROWDOWN)
+		mlx->map->offset_y += 16;
+	else if (keycode == KEY_ARROWRIGHT)
+		mlx->map->offset_x += 16;
+	else if (keycode == KEY_ARROWLEFT)
+		mlx->map->offset_x -= 16;
 }
 
 int	deal_key(int keycode, void *param)

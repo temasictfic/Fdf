@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:46:52 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/29 20:41:19 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/29 22:15:11 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ int	fill_struct(char **splitted_line, int width, t_map *map)
 	while (++i < width)
 	{
 		int_line[i] = ft_atoi(splitted_line[i]);
-		//free(splitted_line[i]);
-	}	
+		free(splitted_line[i]);
+	}
+	free(splitted_line);
 	if (map->height == map->lines_capacity)
 		increase_capacity(map);
 	map->lines[map->height++] = int_line;

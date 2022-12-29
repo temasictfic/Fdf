@@ -6,12 +6,12 @@
 #    By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/06 04:46:15 by sciftci           #+#    #+#              #
-#    Updated: 2022/12/29 21:02:58 by sciftci          ###   ########.fr        #
+#    Updated: 2022/12/29 22:16:52 by sciftci          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -O3 -Ofast -flto -march=native#-g -ggdb -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined 
+CFLAGS = -Wall -Wextra -Werror -g#-O3 -Ofast -flto -march=native#-g -ggdb -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined 
 RM = rm -f
 #-O3 -Ofast -flto -march=native
 NAME = fdf
