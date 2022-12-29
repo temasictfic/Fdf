@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:46:24 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/29 20:18:44 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/29 22:11:23 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int	mouse(int keycode, int x, int y, t_mlx *mlx)
 		mlx->map->zoom -= 1;
 	else if (keycode == MOUSE_SCROLLUP)
 		mlx->map->zoom += 1;
-	else if (keycode == MOUSE_LEFT || keycode == MOUSE_RIGHT
-		|| keycode == MOUSE_MIDDLE)
+	else if (keycode == MOUSE_LEFT || keycode == MOUSE_RIGHT || keycode == MOUSE_MIDDLE)
 	{
 		mlx->mouse->x = x;
 		mlx->mouse->y = y;
@@ -68,5 +67,6 @@ int	mouse_move(int x, int y, t_mlx *mlx)
 	}
 	else if (mlx->mouse->onclick == 3)
 		mlx->map->angles->z_angle += ((y - prev_y) + (x - prev_x)) / 360.0;
+	draw(mlx);
 	return (0);
 }
