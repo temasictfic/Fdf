@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:43:41 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/29 04:26:22 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/29 21:19:16 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,41 @@
 // Offset Y +-
 # define KEY_ARROWUP 126
 # define KEY_ARROWDOWN 125
-// Zoom +-
-# define KEY_I 34
-# define KEY_O 31
-// Raise Z, Lower Z
+// Rotate X-axis
 # define KEY_W 13
 # define KEY_S 1
-// Angle +-
+// Rotate Y-axis
+# define KEY_Q 12
+# define KEY_E 14
+// Rotate Z-axis
 # define KEY_A 0
 # define KEY_D 2
-// Projections paralel, iso, side
+// Raise Z, Lower Z
+# define KEY_Z 6
+# define KEY_X 7
+
+// Projection switch paralel, iso
 # define KEY_ONE 18
-# define KEY_TWO 19
-# define KEY_THREE 20
+
+typedef struct s_angle
+{
+	double		x_angle;
+	double		y_angle;
+	double		z_angle;
+}				t_angle;
 
 typedef struct s_map
 {
 	int			width;
 	int			height;
 	int			**lines;
+	t_angle		*angles;
 	int			lines_capacity;
 	int			zoom;
+	int			offset_x;
+	int			offset_y;
+	float		raise_z;
+	int			projection;
 	int			color;
 }				t_map;
 
@@ -81,6 +95,7 @@ typedef struct s_mouse
 {
 	int			x;
 	int			y;
+	int			onclick;
 }				t_mouse;
 
 typedef struct s_z
@@ -98,14 +113,9 @@ typedef struct s_mlx
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	int			offset_x;
-	int			offset_y;
-	float		raise_z;
-	float		angle;
-	int			projection;
 	t_map		*map;
 	t_mouse		*mouse;
-	int			onclick;
+
 }				t_mlx;
 
 typedef struct s_p
@@ -126,7 +136,9 @@ int				deal_key(int keycode, void *param);
 int				escape(void *param);
 void			keyboard_key(int keycode, t_mlx *mlx);
 void			projection_key(int keycode, t_mlx *mlx);
-void			apply_side(t_p *p1, t_p *p2, t_z *z, t_mlx *mlx);
+void			rotate_x(t_p *p1, t_p *p2, t_z *z, double x_angle);
+void			rotate_y(t_p *p1, t_p *p2, t_z *z, double x_angle);
+void			rotate_z(t_p *p1, t_p *p2, t_z *z, double x_angle);
 void			apply_iso(t_p *p1, t_p *p2, t_z *z, t_mlx *mlx);
 
 void			setup_controls(t_mlx *mlx);
@@ -143,9 +155,9 @@ int				color(int z, int z2, t_map *map);
 void			init_img(t_mlx *mlx);
 void			destroy_img(t_mlx *mlx);
 
-int				mouse(int button, int x, int y, void *param);
-int				mouse_move(int x, int y, void *param);
-int				mouse_release(int button, int x, int y, void *param);
+int				mouse(int button, int x, int y, t_mlx *mlx);
+int				mouse_move(int x, int y, t_mlx *mlx);
+int				mouse_release(int button, int x, int y, t_mlx *mlx);
 
 long int		ft_atoi(const char *str);
 char			**ft_split(char const *str, char c);

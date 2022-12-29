@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:42:43 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/29 04:31:23 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/29 21:18:16 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 	int		x_calc;
 	int		y_calc;
 
-	x_calc = x + mlx->offset_x;
-	y_calc = y + mlx->offset_y;
+	x_calc = x + mlx->map->offset_x;
+	y_calc = y + mlx->map->offset_y;
 	if (x_calc >= 0 && y_calc >= 0 && x_calc < WIN_WIDTH && y_calc < WIN_HEIGHT)
 	{
 		dst = mlx->addr + (y_calc * mlx->line_length + x_calc
@@ -61,16 +61,14 @@ void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 
 void	init_coordinates(t_p *p1, t_p *p2, t_z *z, t_mlx *mlx)
 {
-	z->z1 = mlx->map->lines[p1->y][p1->x];
-	z->z2 = mlx->map->lines[p2->y][p2->x];
+	z->z1 = mlx->map->lines[p1->y][p1->x] * mlx->map->raise_z;
+	z->z2 = mlx->map->lines[p2->y][p2->x] * mlx->map->raise_z;
 	zoom(p1, p2, mlx);
-	if (mlx->projection == 1)
+	rotate_x(p1, p2, z, mlx->map->angles->x_angle);
+	rotate_y(p1, p2, z, mlx->map->angles->y_angle);
+	rotate_z(p1, p2, z, mlx->map->angles->z_angle);
+	if (mlx->map->projection == 1)
 		apply_iso(p1, p2, z, mlx);
-	else if (mlx->projection == 2)
-	{
-		mlx->angle = M_PI * 26.57 / 180.0;
-		apply_iso(p1, p2, z, mlx);
-	}
 }
 
 void	bresenham(t_p p1, t_p p2, t_mlx *mlx)

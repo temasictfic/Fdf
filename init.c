@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:44:06 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/14 04:48:01 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/29 21:10:52 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,17 @@ t_map	*init_map(void)
 	map = malloc(sizeof(t_map));
 	if (!map)
 		exit_program(MALLOC_ERROR);
+	map->angles = malloc(sizeof(t_angle));
+	map->angles->x_angle = 0;
+	map->angles->y_angle = 0;
+	map->angles->z_angle = 0;
 	map->width = 0;
 	map->height = 0;
 	map->lines_capacity = 16;
-	map->zoom = 0;
+	map->offset_x = WIN_WIDTH / 2;
+	map->offset_y = WIN_HEIGHT / 2;
+	map->raise_z = 1;
+	map->projection = 1;
 	map->lines = malloc(sizeof(int *) * map->lines_capacity);
 	if (!map->lines)
 		exit_program(MALLOC_ERROR);
@@ -47,12 +54,7 @@ t_mlx	*init_mlx(t_map *map)
 		exit_program(MALLOC_ERROR);
 	mlx->img = NULL;
 	mlx->addr = NULL;
-	mlx->offset_x = WIN_WIDTH / 2;
-	mlx->offset_y = WIN_HEIGHT / 2;
-	mlx->raise_z = 1;
-	mlx->angle = M_PI * 30.0 / 180.0;
-	mlx->projection = 1;
-	mlx->onclick = 0;
+	mlx->mouse->onclick = 0;
 	mlx->map = map;
 	mlx->map->zoom = WIN_WIDTH / (mlx->map->width + mlx->map->height);
 	return (mlx);

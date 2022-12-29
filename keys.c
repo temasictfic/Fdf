@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:44:37 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/06 04:45:19 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/29 21:20:21 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,35 +23,40 @@ void	keyboard_key(int keycode, t_mlx *mlx)
 	if (keycode == KEY_ESC)
 		exit(0);
 	else if (keycode == KEY_ARROWUP)
-		mlx->offset_y -= 16;
+		mlx->map->offset_y -= 16;
 	else if (keycode == KEY_ARROWDOWN)
-		mlx->offset_y += 16;
+		mlx->map->offset_y += 16;
 	else if (keycode == KEY_ARROWRIGHT)
-		mlx->offset_x += 16;
+		mlx->map->offset_x += 16;
 	else if (keycode == KEY_ARROWLEFT)
-		mlx->offset_x -= 16;
-	else if (keycode == KEY_I)
-		mlx->map->zoom++;
-	else if (keycode == KEY_O)
-		mlx->map->zoom--;
-	else if (keycode == KEY_W)
-		mlx->raise_z += 0.1;
-	else if (keycode == KEY_S)
-		mlx->raise_z -= 0.1;
+		mlx->map->offset_x -= 16;
+	else if (keycode == KEY_Z)
+		mlx->map->raise_z += 0.1;
+	else if (keycode == KEY_X)
+		mlx->map->raise_z -= 0.1;
 	else if (keycode == KEY_A)
-		mlx->angle += 0.025;
+		mlx->map->angles->z_angle += 0.025;
 	else if (keycode == KEY_D)
-		mlx->angle -= 0.025;
+		mlx->map->angles->z_angle -= 0.025;
+	else if (keycode == KEY_Q)
+		mlx->map->angles->y_angle += 0.025;
+	else if (keycode == KEY_E)
+		mlx->map->angles->y_angle -= 0.025;
+	else if (keycode == KEY_W)
+		mlx->map->angles->x_angle += 0.025;
+	else if (keycode == KEY_S)
+		mlx->map->angles->x_angle -= 0.025;
 }
 
 void	projection_key(int keycode, t_mlx *mlx)
 {
 	if (keycode == KEY_ONE)
-		mlx->projection = 0;
-	else if (keycode == KEY_TWO)
-		mlx->projection = 1;
-	else if (keycode == KEY_THREE)
-		mlx->projection = 2;
+	{
+		mlx->map->projection ^= 1;
+		mlx->map->angles->x_angle = 0;
+		mlx->map->angles->y_angle = 0;
+		mlx->map->angles->z_angle = 0;
+	}
 }
 
 int	deal_key(int keycode, void *param)
@@ -72,6 +77,4 @@ void	setup_controls(t_mlx *mlx)
 	mlx_hook(mlx->window, EVENT_ON_MOUSEDOWN, NO_MASK, mouse, mlx);
 	mlx_hook(mlx->window, EVENT_ON_MOUSEMOVE, NO_MASK, mouse_move, mlx);
 	mlx_hook(mlx->window, EVENT_ON_MOUSEUP, NO_MASK, mouse_release, mlx);
-	init_img(mlx);
-	draw(mlx);
 }
