@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:42:43 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/14 04:52:48 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/29 04:31:23 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	color(int z, int z2, t_map *map)
 		d = z2;
 	else
 		d = z;
-	map->color = 0;
 	if (d <= 0)
 		map->color = 0x3264B8;
 	else if (d > 0 && d <= 10)
@@ -52,7 +51,7 @@ void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 
 	x_calc = x + mlx->offset_x;
 	y_calc = y + mlx->offset_y;
-	if (x_calc > 0 && y_calc >= 0 && x_calc < WIN_WIDTH && y_calc < WIN_HEIGHT)
+	if (x_calc >= 0 && y_calc >= 0 && x_calc < WIN_WIDTH && y_calc < WIN_HEIGHT)
 	{
 		dst = mlx->addr + (y_calc * mlx->line_length + x_calc
 				* (mlx->bits_per_pixel / 8));
@@ -68,7 +67,10 @@ void	init_coordinates(t_p *p1, t_p *p2, t_z *z, t_mlx *mlx)
 	if (mlx->projection == 1)
 		apply_iso(p1, p2, z, mlx);
 	else if (mlx->projection == 2)
-		apply_side(p1, p2, z, mlx);
+	{
+		mlx->angle = M_PI * 26.57 / 180.0;
+		apply_iso(p1, p2, z, mlx);
+	}
 }
 
 void	bresenham(t_p p1, t_p p2, t_mlx *mlx)

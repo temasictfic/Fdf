@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:47:04 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/06 04:47:05 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/29 03:33:18 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ unsigned int	count_words(const char *str, char sep)
 	count = 0;
 	while (*str)
 	{
-		if (*str == sep)
+		if (*str == sep || *str == '\n')
 			str++;
 		else
 		{

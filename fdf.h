@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:43:41 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/14 04:52:15 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/12/29 04:26:22 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <stdio.h> //temp
 # include <stdlib.h>
 
-# define WIN_WIDTH 1280
-# define WIN_HEIGHT 720
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 
 # define MLX_ERROR "MLX error."
 # define IMG_ERROR "Image initialization error."
