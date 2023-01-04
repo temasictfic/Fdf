@@ -1,30 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/06 04:43:30 by sciftci           #+#    #+#             */
+/*   Updated: 2022/12/29 22:35:37 by sciftci          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-t_p p(int x, int y)
+t_p	point(int x, int y)
 {
-	t_p p;
+	t_p	p;
 
 	p.x = x;
 	p.y = y;
 	return (p);
 }
 
-void init_img(t_mlx *mlx)
+void	init_img(t_mlx *mlx)
 {
 	mlx->img = mlx_new_image(mlx->mlx, 1920, 1080);
 	if (!mlx->img)
-		exit_str(IMG_ERR);
-	mlx->addr = mlx_get_data_addr(mlx->img, &mlx->bits_per_pixel, &mlx->line_length, &mlx->endian);
+		exit_program(IMG_ERROR);
+	mlx->addr = mlx_get_data_addr(mlx->img, &mlx->bits_per_pixel,
+			&mlx->line_length, &mlx->endian);
 	if (!mlx->addr)
-		exit_str(IMG_ERR);
-}
-
-void	destroy_img(t_mlx	*mlx)
-{
-	mlx_destroy_image(mlx->mlx, mlx->img);
-	mlx->addr = NULL;
-	mlx->img = NULL;
-
+		exit_program(IMG_ERROR);
 }
 
 void	draw(t_mlx *mlx)
@@ -34,20 +39,19 @@ void	draw(t_mlx *mlx)
 
 	y = 0;
 	init_img(mlx);
-	while(y < mlx->map->height)
+	while (y < mlx->map->height)
 	{
 		x = 0;
 		while (x < mlx->map->width)
 		{
-			if (x != mlx->map->width-1)
-				bresenham(p(x,y), p(x + 1, y), mlx);
-			if (y != mlx->map->height -1)
-				bresenham(p(x, y), p(x, y+1), mlx);
+			if (x != mlx->map->width - 1)
+				bresenham(point(x, y), point(x + 1, y), mlx);
+			if (y != mlx->map->height - 1)
+				bresenham(point(x, y), point(x, y + 1), mlx);
 			x++;
-		
 		}
 		y++;
 	}
-	mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->img, 0, 0); // 0 lar ney?
-	destroy_img(mlx);
+	mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->img, 0, 0);
+	mlx_destroy_image(mlx->mlx, mlx->img);
 }

@@ -1,52 +1,73 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mouse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/06 04:46:24 by sciftci           #+#    #+#             */
+/*   Updated: 2022/12/29 22:25:02 by sciftci          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-int	mouse(int keycode, int x, int y, void *param)
+int	mouse(int keycode, int x, int y, t_mlx *mlx)
 {
-	t_mlx	*mlx;
-
 	(void)x;
 	(void)y;
-	mlx = (t_mlx *)param;
-	if (keycode == MOUSE_SCROLLUP)
+	if (keycode == MOUSE_SCROLLDOWN)
 		mlx->map->zoom -= 1;
-	else if (keycode == MOUSE_SCROLLDOWN)
+	else if (keycode == MOUSE_SCROLLUP)
 		mlx->map->zoom += 1;
-	else if (keycode == MOUSE_LEFT)
+	else if (keycode == MOUSE_LEFT || keycode == MOUSE_RIGHT
+		|| keycode == MOUSE_MIDDLE)
 	{
 		mlx->mouse->x = x;
 		mlx->mouse->y = y;
-		mlx->onclick = 1;
+		if (keycode == MOUSE_LEFT)
+			mlx->mouse->onclick = 1;
+		else if (keycode == MOUSE_RIGHT)
+			mlx->mouse->onclick = 2;
+		else if (keycode == MOUSE_MIDDLE)
+			mlx->mouse->onclick = 3;
 	}
 	draw(mlx);
 	return (0);
 }
 
-int	mouse_move(int x, int y, void *param)
+int	mouse_release(int button, int x, int y, t_mlx *mlx)
 {
-	t_mlx	*mlx;
-    int     prev_x;
-    int     prev_y;
-	mlx = (t_mlx *)param;
-	if (!mlx->onclick)
+	mlx->mouse->x = x;
+	mlx->mouse->y = y;
+	if (button == MOUSE_LEFT || button == MOUSE_RIGHT || button == MOUSE_MIDDLE)
+		mlx->mouse->onclick = 0;
+	return (0);
+}
+
+int	mouse_move(int x, int y, t_mlx *mlx)
+{
+	int	prev_x;
+	int	prev_y;
+
+	if (!mlx->mouse->onclick)
 		return (0);
 	prev_x = mlx->mouse->x;
 	prev_y = mlx->mouse->y;
 	mlx->mouse->x = x;
 	mlx->mouse->y = y;
-	mlx->offset_x += x - prev_x;
-	mlx->offset_y += y - prev_y;
+	if (mlx->mouse->onclick == 1)
+	{
+		mlx->map->offset_x += x - prev_x;
+		mlx->map->offset_y += y - prev_y;
+	}
+	else if (mlx->mouse->onclick == 2)
+	{
+		mlx->map->angles->x_angle += (y - prev_y) / 360.0;
+		mlx->map->angles->y_angle += (x - prev_x) / 360.0;
+	}
+	else if (mlx->mouse->onclick == 3)
+		mlx->map->angles->z_angle += ((y - prev_y) + (x - prev_x)) / 360.0;
 	draw(mlx);
-	return (0);
-}
-
-int	mouse_release(int keycode, int x, int y, void *param)
-{
-	t_mlx	*mlx;
-
-	mlx = (t_mlx *)param;
-	(void)x;
-	(void)y;
-	(void)keycode;
-	mlx->onclick = 0;
 	return (0);
 }

@@ -1,8 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/06 04:47:04 by sciftci           #+#    #+#             */
+/*   Updated: 2022/12/29 03:33:18 by sciftci          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-int err_calc(t_p *delta)
+int	err_calculation(t_p *delta)
 {
-	return (((delta->x > delta->y) * delta->x / 2) - (delta->x <= delta->y) * delta->y / 2);
+	if (delta->x > delta->y)
+		return (delta->x / 2);
+	else
+		return (-delta->y / 2);
 }
 
 long int	ft_atoi(const char *str)
@@ -55,7 +70,7 @@ unsigned int	count_words(const char *str, char sep)
 	count = 0;
 	while (*str)
 	{
-		if (*str == sep)
+		if (*str == sep || *str == '\n')
 			str++;
 		else
 		{
