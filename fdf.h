@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:43:41 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/29 21:19:16 by sciftci          ###   ########.fr       */
+/*   Updated: 2023/01/04 15:33:28 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
-# include <stdio.h> //temp
+# include <stdio.h>
 # include <stdlib.h>
 
 # define WIN_WIDTH 1920
@@ -88,7 +88,6 @@ typedef struct s_map
 	int			offset_y;
 	float		raise_z;
 	int			projection;
-	int			color;
 }				t_map;
 
 typedef struct s_mouse
@@ -102,6 +101,7 @@ typedef struct s_z
 {
 	int			z1;
 	int			z2;
+	int			color;
 }				t_z;
 
 typedef struct s_mlx
@@ -150,10 +150,9 @@ void			init_coordinates(t_p *p1, t_p *p2, t_z *z, t_mlx *mlx);
 void			zoom(t_p *p1, t_p *p2, t_mlx *mlx);
 t_p				point(int x, int y);
 void			draw(t_mlx *mlx);
-int				color(int z, int z2, t_map *map);
+int				color(t_z *z);
 
 void			init_img(t_mlx *mlx);
-void			destroy_img(t_mlx *mlx);
 
 int				mouse(int button, int x, int y, t_mlx *mlx);
 int				mouse_move(int x, int y, t_mlx *mlx);

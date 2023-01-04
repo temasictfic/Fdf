@@ -6,33 +6,33 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 04:42:43 by sciftci           #+#    #+#             */
-/*   Updated: 2022/12/29 21:18:16 by sciftci          ###   ########.fr       */
+/*   Updated: 2023/01/04 15:53:01 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	color(int z, int z2, t_map *map)
+int	color(t_z *z)
 {
 	int	d;
 
-	if (z2 > z)
-		d = z2;
+	if (abs(z->z2) > abs(z->z1))
+		d = abs(z->z2);
 	else
-		d = z;
+		d = abs(z->z1);
 	if (d <= 0)
-		map->color = 0x3264B8;
+		z->color = 0x3264B8;
 	else if (d > 0 && d <= 10)
-		map->color = 0x32B864;
+		z->color = 0x32B864;
 	else if (d > 10 && d <= 20)
-		map->color = 0x96C896;
+		z->color = 0x96C896;
 	else if (d > 20 && d <= 50)
-		map->color = 0xFAFAC8;
-	else if (z > 50 && z <= 70)
-		map->color = 0x966450;
+		z->color = 0xFAFAC8;
+	else if (d > 50 && d <= 70)
+		z->color = 0x966450;
 	else if (d > 70)
-		map->color = 0xEFEFEF;
-	return (map->color);
+		z->color = 0xEFEFEF;
+	return (z->color);
 }
 
 void	zoom(t_p *p1, t_p *p2, t_mlx *mlx)
@@ -63,6 +63,7 @@ void	init_coordinates(t_p *p1, t_p *p2, t_z *z, t_mlx *mlx)
 {
 	z->z1 = mlx->map->lines[p1->y][p1->x] * mlx->map->raise_z;
 	z->z2 = mlx->map->lines[p2->y][p2->x] * mlx->map->raise_z;
+	color(z);
 	zoom(p1, p2, mlx);
 	rotate_x(p1, p2, z, mlx->map->angles->x_angle);
 	rotate_y(p1, p2, z, mlx->map->angles->y_angle);
@@ -83,7 +84,7 @@ void	bresenham(t_p p1, t_p p2, t_mlx *mlx)
 	err = err_calculation(&delta);
 	while (1)
 	{
-		my_mlx_pixel_put(mlx, p1.x, p1.y, color(z.z1, z.z2, mlx->map));
+		my_mlx_pixel_put(mlx, p1.x, p1.y, z.color);
 		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
 		e2 = err;
